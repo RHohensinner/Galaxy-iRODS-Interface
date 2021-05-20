@@ -1,0 +1,82 @@
+<tool id="irods_download" name="iRODS Download" version="0.1" workflow_compatible="false">
+	<description>Download your files from iRODS into Galaxy</description>
+	<requirements>
+		<requirement type="package" version="0.8.2">python-irodsclient</requirement>
+		<requirement type="package" version="0.1.0">tk</requirement>
+	</requirements>
+
+	<command interpreter="python">
+		### using CHEETAH ###
+		## Set up iRODS params
+		#import json
+		#set params = {}
+		#set params["irods_host"] = str($custom_host)
+		#set params["irods_port"] = str($custom_port)
+		#set params["irods_zone"] = str($custom_zone)
+		##set params["filepath"] = str($file_path)
+
+		#if $file_select_config.selection_type == "use_path"
+		#set params["selection_type"] = "path"
+		#set params["file_path"] = str($file_select_config.file_path)
+		#set params["expl_path"] = ""
+		#end if
+		#if $file_select_config.selection_type == "use_explorer"
+		#set params["selection_type"] = "explorer"
+		#set params["file_path"] = ""
+		#set params["expl_path"] = str($file_select_config.explorer_entrypoint)
+		#end if
+		## set up Galaxy params
+		#set params["galaxy_user"] = str($__user_name__)
+		#set params["job_id"] = str($output.creating_job.id)
+		#set params["out_dir"] = str($output.files_path)
+		#set params["out_file"] = str($output)
+		#set params["galaxy_root"] = str($GALAXY_ROOT_DIR)
+		#set params["galaxy_datatypes"] = str($GALAXY_DATATYPES_CONF_FILE)
+		##import os
+		##import glob
+		##set $test = glob.glob("os.getcwd()" + "/**/irods_galaxy_registry.xml", recursive=True)
+		##set params["reg_file"]
+		#set params["tool_type"] = "down"
+		#set $params=json.dumps($params)
+		main.py '$params'
+	</command>
+
+	<inputs>
+		<param name="custom_host" type="text" value="data.cyverse.tugraz.at" label="iRODS Host:" />
+		<param name="custom_port" type="text" value="1247" label="iRODS Port:" />
+		<param name="custom_zone" type="text" value="TUG" label="iRODS Zone:" />
+		<conditional name="file_select_config">
+			<param type="select" display="radio" name="selection_type" label="File Selection:">
+				<option value="use_path">Use path to iRODS File or Directory</option>
+				<option value="use_explorer">Use file explorer</option>
+			</param>
+			<when value="use_path">
+				<param name="file_path" type="text" value="E.g.: /ZONE/home/USER/my_data.txt" label="Path to iRODS File or Directory:" />
+			</when>
+			<when value="use_explorer">
+				<param name="explorer_entrypoint" type="text" value="" label="Entry directory for file explorer (optional):" />
+			</when>
+		</conditional>
+	</inputs>
+
+	<outputs>
+		<data name="output" label="${tool.name}: " auto_format="true" />
+	</outputs>
+
+	<help>
+Download iRODS
+
+	</help>
+	 <citations>
+        	<citation type="bibtex">
+@misc{Download-iRODS,
+  author = {Hohensinner, Richard},
+  year = {2021},
+  title = {iRODSTools},
+  publisher = {GitLab},
+  journal = {GitLab repository},
+  url = {https://gitlab.tugraz.at/D463A320ED7901AB/galaxy_irods_tools},
+}
+		</citation>
+    	</citations>
+</tool>
