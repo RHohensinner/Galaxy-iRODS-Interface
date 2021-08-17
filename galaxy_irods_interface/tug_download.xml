@@ -1,0 +1,64 @@
+<tool id="irods_download" name="iRODS Download" version="0.4" workflow_compatible="false">
+	<description>Download your files from iRODS into Galaxy</description>
+	<requirements>
+		<requirement type="package" version="0.8.2">python-irodsclient</requirement>
+	</requirements>
+
+	<command interpreter="python">
+		### using CHEETAH ###
+		## Set up iRODS params
+		#import json
+		#set params = {}
+		#set params["irods_host"] = str($custom_host)
+		#set params["irods_port"] = str($custom_port)
+		#set params["irods_zone"] = str($custom_zone)
+		##set params["filepath"] = str($file_path)
+		#set params["file_path"] = str($file_path)
+		## set up Galaxy params
+		#set params["galaxy_user"] = str($__user_name__)
+		#set params["job_id"] = str($output.creating_job.id)
+		#set params["out_dir"] = str($output.files_path)
+		#set params["out_file"] = str($output)
+		#set params["galaxy_root"] = str($GALAXY_ROOT_DIR)
+		#set params["galaxy_datatypes"] = str($GALAXY_DATATYPES_CONF_FILE)
+		#set params["irods_user"] = str($user)
+		#set params["irods_password"] = str($password)
+		##import os
+		##import glob
+		##set $test = glob.glob("os.getcwd()" + "/**/irods_galaxy_registry.xml", recursive=True)
+		##set params["reg_file"]
+		#set params["tool_type"] = "down"
+		#set $params=json.dumps($params)
+		irods_main.py '$params'
+	</command>
+
+	<inputs>
+		<param name="custom_host" type="text" value="data.cyverse.tugraz.at" label="iRODS Host:" />
+		<param name="custom_port" type="text" value="1247" label="iRODS Port:" />
+		<param name="custom_zone" type="text" value="TUG" label="iRODS Zone:" />
+		<param name="file_path" type="text" value="E.g.: /ZONE/home/USER/my_data.txt" label="Path to iRODS File or Directory:" />
+		<param name="user" type="text" value="" label="iRODS User:" />
+		<param name="password" type="text" value="" label="iRODS Password:" />
+	</inputs>
+
+	<outputs>
+		<data name="output" label="${tool.name}: ${file_path}" auto_format="true" />
+	</outputs>
+
+	<help>
+Download iRODS
+
+	</help>
+	 <citations>
+        	<citation type="bibtex">
+@misc{Download-iRODS,
+  author = {Hohensinner, Richard},
+  year = {2021},
+  title = {iRODSTools},
+  publisher = {GitLab},
+  journal = {GitLab repository},
+  url = {https://gitlab.tugraz.at/D463A320ED7901AB/galaxy_irods_tools},
+}
+		</citation>
+    	</citations>
+</tool>

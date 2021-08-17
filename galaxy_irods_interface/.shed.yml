@@ -1,0 +1,4 @@
+categories: []
+description: An Interface to transfer data to/from iRODS from/to the Galaxy History
+name: galaxy_irods_interface
+owner: rhohensinner
